@@ -1,6 +1,6 @@
 package com.afmc.retrofitmvvm.ui.repo;
 
-import com.afmc.retrofitmvvm.retrofit_client.RetrofitClient;
+import com.afmc.retrofitmvvm.retrofit_client.RetrofitHelper;
 import com.afmc.retrofitmvvm.retrofit_client.RetrofitInterface;
 import com.afmc.retrofitmvvm.ui.pojo.PostModel;
 
@@ -13,7 +13,7 @@ public class CallingAPI {
     Retrofit retrofit;
 
     public Call<List<PostModel>> callAPI() {
-        retrofit = RetrofitClient.getRetrofitClient();
+        retrofit = RetrofitHelper.getRetrofitClient();
         RetrofitInterface retrofitInterface = retrofit.create(RetrofitInterface.class);
         return retrofitInterface.getData();
     }

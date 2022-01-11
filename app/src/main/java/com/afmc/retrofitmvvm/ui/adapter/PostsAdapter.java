@@ -1,15 +1,14 @@
 package com.afmc.retrofitmvvm.ui.adapter;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.afmc.retrofitmvvm.R;
+import com.afmc.retrofitmvvm.databinding.PostItemBinding;
 import com.afmc.retrofitmvvm.ui.pojo.PostModel;
 
 import java.util.ArrayList;
@@ -20,15 +19,16 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
 
     @NonNull
     @Override
-    public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new PostViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.post_item, parent, false));
+    public PostViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+        PostItemBinding postItemBinding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()),
+                R.layout.post_item, viewGroup, false);
+        return new PostViewHolder(postItemBinding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
-        holder.titleTV.setText(moviesList.get(position).getTitle());
-        holder.userTV.setText(moviesList.get(position).getUserId()+"");
-        holder.bodyTV.setText(moviesList.get(position).getBody());
+        PostModel postModel = moviesList.get(position);
+        holder.postItemBinding.setPostModel(postModel);
     }
 
     @Override
@@ -42,12 +42,11 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
     }
 
     public class PostViewHolder extends RecyclerView.ViewHolder {
-        TextView titleTV, userTV, bodyTV;
-        public PostViewHolder(@NonNull View itemView) {
-            super(itemView);
-            titleTV = itemView.findViewById(R.id.titleTV);
-            userTV = itemView.findViewById(R.id.userIDTV);
-            bodyTV = itemView.findViewById(R.id.bodyTV);
+        PostItemBinding postItemBinding;
+
+        public PostViewHolder(@NonNull PostItemBinding postItemBinding) {
+            super(postItemBinding.getRoot());
+            this.postItemBinding = postItemBinding;
         }
     }
 }
